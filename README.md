@@ -11,6 +11,7 @@ A personal-scale knowledge infrastructure designed to capture, retrieve, and evo
 It prioritizes relevance, transparency, and long-term knowledge quality over raw recall.
 
 👉 **Demo / Docs:** _Coming soon_
+👉 **Web repo:** <https://github.com/clash402/echo-notes-web>
 
 ---
 
