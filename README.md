@@ -7,8 +7,9 @@ A personal-scale knowledge infrastructure designed to capture, retrieve, and evo
 
 ## 1. Elevator Pitch
 
-**Echo Notes** is a semantic memory system that enables natural-language recall over personal knowledge using embeddings and vector storage.  
-It prioritizes relevance, transparency, and long-term knowledge quality over raw recall.
+**Echo Notes** is a semantic memory system that enables natural-language recall over personal knowledge using embeddings and vector storage. It prioritizes relevance, transparency, and long-term knowledge quality over raw recall.
+
+Echo Notes is optimized for decision recall — recovering why something was decided, not just what was written.”
 
 👉 **Demo / Docs:** _Coming soon_
 👉 **Web repo:** <https://github.com/clash402/echo-notes-web>
@@ -26,7 +27,7 @@ It is a **knowledge infrastructure layer** that:
 - Retrieves contextually relevant information
 - Supports summarization and synthesis
 
-It is designed to evolve beyond personal use.
+This system is designed to evolve beyond personal use. It prevents organizations from relearning the same lessons every 6–12 months.
 
 ---
 
