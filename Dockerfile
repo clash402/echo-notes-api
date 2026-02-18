@@ -11,7 +11,7 @@ FROM base AS ci
 COPY . /app
 
 RUN python -m pip install --upgrade pip && \
-    pip install ".[dev]"
+    pip install -e ".[dev]"
 
 FROM base AS runtime
 

@@ -50,7 +50,7 @@ jobs:
 
       - name: Dependency security audit
         run: |
-          docker run --rm echo-notes-api:ci-${{ github.sha }} sh -lc "pip-audit"
+          docker run --rm echo-notes-api:ci-${{ github.sha }} sh -lc "pip-audit --skip-editable"
 
   security-container:
     name: security-container
