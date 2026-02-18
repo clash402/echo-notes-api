@@ -11,12 +11,14 @@ FROM base AS ci
 COPY . /app
 
 RUN python -m pip install --upgrade pip && \
-    pip install ".[dev]"
+    pip install -e ".[dev]"
 
 FROM base AS runtime
 
 COPY pyproject.toml /app/pyproject.toml
 COPY main.py /app/main.py
+COPY src /app/src
+COPY data /app/data
 
 RUN python -m pip install --upgrade pip && \
     pip install .
