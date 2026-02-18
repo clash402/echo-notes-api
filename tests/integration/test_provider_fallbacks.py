@@ -1,3 +1,5 @@
+import importlib.util
+
 from src.core.settings import clear_settings_cache
 
 
@@ -43,6 +45,10 @@ def test_audio_openai_transcription_without_key_returns_warning(client, monkeypa
     assert response.status_code == 200
     payload = response.json()
     assert payload["data"]["text"] == ""
-    assert payload["data"]["metadata"]["model"] == "whisper-unavailable"
     warnings = payload["meta"]["warnings"]
-    assert any("OpenAI Whisper provider is unavailable" in warning for warning in warnings)
+    if importlib.util.find_spec("multipart") is None:
+        assert payload["data"]["metadata"]["model"] == "multipart-unavailable"
+        assert any("python-multipart is not installed" in warning for warning in warnings)
+    else:
+        assert payload["data"]["metadata"]["model"] == "whisper-unavailable"
+        assert any("OpenAI Whisper provider is unavailable" in warning for warning in warnings)

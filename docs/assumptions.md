@@ -19,3 +19,5 @@
 - Provider routing is environment-driven (`auto|local|openai`) for reflection,
   embeddings, and transcription. If OpenAI credentials/package are missing, the
   system falls back to local providers and emits warnings in API metadata.
+- If `python-multipart` is unavailable, the API still boots and `/audio/transcribe`
+  returns an explicit fallback response with warning metadata.
