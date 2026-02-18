@@ -1,4 +1,4 @@
-from backend.src.core.settings import clear_settings_cache
+from src.core.settings import clear_settings_cache
 
 
 def test_echo_openai_provider_without_key_falls_back(client, monkeypatch) -> None:

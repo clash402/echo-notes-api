@@ -6,12 +6,12 @@ from typing import Literal
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import ValidationError
 
-from backend.src.core.llm.providers import LocalHeuristicLLMProvider, resolve_llm_provider
-from backend.src.core.llm.router import ModelRouter
-from backend.src.core.llm.tracker import track_llm_call
-from backend.src.core.request_context import add_warning
-from backend.src.db.engine import insert_reflection_event_row
-from backend.src.schemas.reflection import Reflection
+from src.core.llm.providers import LocalHeuristicLLMProvider, resolve_llm_provider
+from src.core.llm.router import ModelRouter
+from src.core.llm.tracker import track_llm_call
+from src.core.request_context import add_warning
+from src.db.engine import insert_reflection_event_row
+from src.schemas.reflection import Reflection
 
 REFLECTION_PROMPT = ChatPromptTemplate.from_messages(
     [

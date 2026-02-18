@@ -1,4 +1,4 @@
-from backend.src.services.embeddings import cosine_similarity, generate_embedding
+from src.services.embeddings import cosine_similarity, generate_embedding
 
 
 def test_embedding_similarity_prefers_related_text() -> None:

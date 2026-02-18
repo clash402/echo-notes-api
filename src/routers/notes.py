@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException, Query
 
-from backend.src.schemas.envelope import Envelope, envelope
-from backend.src.schemas.notes import CreateNoteRequest, ListNotesResponse, Note
-from backend.src.services.notes import create_note, get_note, list_notes
+from src.schemas.envelope import Envelope, envelope
+from src.schemas.notes import CreateNoteRequest, ListNotesResponse, Note
+from src.services.notes import create_note, get_note, list_notes
 
 router = APIRouter(tags=["notes"])
 

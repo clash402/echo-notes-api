@@ -1,8 +1,8 @@
 from fastapi import APIRouter, File, UploadFile
 
-from backend.src.schemas.envelope import Envelope, envelope
-from backend.src.schemas.transcript import Transcript
-from backend.src.services.transcription import transcribe_upload
+from src.schemas.envelope import Envelope, envelope
+from src.schemas.transcript import Transcript
+from src.services.transcription import transcribe_upload
 
 router = APIRouter(tags=["audio"])
 

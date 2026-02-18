@@ -4,8 +4,8 @@ from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 
-from backend.src.core.settings import clear_settings_cache
-from backend.src.db.engine import init_db
+from src.core.settings import clear_settings_cache
+from src.db.engine import init_db
 
 
 @pytest.fixture(autouse=True)

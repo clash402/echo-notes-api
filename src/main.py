@@ -2,15 +2,15 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from backend.src.core.logging import configure_logging
-from backend.src.core.middleware import request_context_middleware
-from backend.src.db.engine import init_db
-from backend.src.routers.audio import router as audio_router
-from backend.src.routers.echo import router as echo_router
-from backend.src.routers.health import router as health_router
-from backend.src.routers.notes import router as notes_router
-from backend.src.schemas.envelope import Envelope, envelope
-from backend.src.schemas.root import RootPayload
+from src.core.logging import configure_logging
+from src.core.middleware import request_context_middleware
+from src.db.engine import init_db
+from src.routers.audio import router as audio_router
+from src.routers.echo import router as echo_router
+from src.routers.health import router as health_router
+from src.routers.notes import router as notes_router
+from src.schemas.envelope import Envelope, envelope
+from src.schemas.root import RootPayload
 
 
 @asynccontextmanager

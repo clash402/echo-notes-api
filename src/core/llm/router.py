@@ -1,6 +1,6 @@
 from typing import Literal
 
-from backend.src.core.settings import get_settings
+from src.core.settings import get_settings
 
 
 class ModelRouter:

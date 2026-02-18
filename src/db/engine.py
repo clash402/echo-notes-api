@@ -1,8 +1,8 @@
 import sqlite3
 from pathlib import Path
 
-from backend.src.core.settings import get_settings
-from backend.src.db.models import SCHEMA_STATEMENTS
+from src.core.settings import get_settings
+from src.db.models import SCHEMA_STATEMENTS
 
 
 def get_connection() -> sqlite3.Connection:

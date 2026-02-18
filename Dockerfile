@@ -17,7 +17,8 @@ FROM base AS runtime
 
 COPY pyproject.toml /app/pyproject.toml
 COPY main.py /app/main.py
-COPY backend /app/backend
+COPY src /app/src
+COPY data /app/data
 
 RUN python -m pip install --upgrade pip && \
     pip install .

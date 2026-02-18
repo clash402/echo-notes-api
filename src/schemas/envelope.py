@@ -2,7 +2,7 @@ from typing import Generic, TypeVar
 
 from pydantic import BaseModel, Field
 
-from backend.src.core.request_context import get_request_meta
+from src.core.request_context import get_request_meta
 
 T = TypeVar("T")
 

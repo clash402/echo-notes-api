@@ -3,7 +3,7 @@ from collections.abc import Awaitable, Callable
 
 from fastapi import Request, Response
 
-from backend.src.core.request_context import RequestMeta, set_request_meta
+from src.core.request_context import RequestMeta, set_request_meta
 
 
 async def request_context_middleware(

@@ -11,7 +11,7 @@ class Settings(BaseModel):
     )
     app_env: str = Field(default_factory=lambda: os.getenv("ECHO_NOTES_APP_ENV", "dev"))
     database_path: Path = Field(
-        default_factory=lambda: Path(os.getenv("ECHO_NOTES_DB_PATH", "backend/data/echo_notes.db"))
+        default_factory=lambda: Path(os.getenv("ECHO_NOTES_DB_PATH", "data/echo_notes.db"))
     )
     llm_provider: str = Field(default_factory=lambda: os.getenv("ECHO_NOTES_LLM_PROVIDER", "auto"))
     llm_default_model: str = Field(

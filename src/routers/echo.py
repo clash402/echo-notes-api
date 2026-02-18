@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
-from backend.src.schemas.envelope import Envelope, envelope
-from backend.src.schemas.reflection import EchoRequest, Reflection
-from backend.src.services.reflection import reflect_transcript
+from src.schemas.envelope import Envelope, envelope
+from src.schemas.reflection import EchoRequest, Reflection
+from src.services.reflection import reflect_transcript
 
 router = APIRouter(tags=["echo"])
 

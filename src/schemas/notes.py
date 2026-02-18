@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 
-from backend.src.schemas.reflection import Reflection
-from backend.src.schemas.transcript import Transcript, TranscriptMetadata
+from src.schemas.reflection import Reflection
+from src.schemas.transcript import Transcript, TranscriptMetadata
 
 
 class RelatedNoteLink(BaseModel):

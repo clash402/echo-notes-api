@@ -1,4 +1,4 @@
-from backend.src.services.reflection import reflect_transcript
+from src.services.reflection import reflect_transcript
 
 
 def test_reflection_output_structure() -> None:

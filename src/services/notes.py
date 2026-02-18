@@ -5,12 +5,12 @@ from typing import TypedDict
 
 from langgraph.graph import END, StateGraph
 
-from backend.src.db.engine import get_connection
-from backend.src.schemas.notes import CreateNoteRequest, Note, RelatedNoteLink
-from backend.src.schemas.reflection import Reflection
-from backend.src.schemas.transcript import Transcript, TranscriptMetadata
-from backend.src.services.embeddings import cosine_similarity, generate_embedding
-from backend.src.services.reflection import reflect_transcript
+from src.db.engine import get_connection
+from src.schemas.notes import CreateNoteRequest, Note, RelatedNoteLink
+from src.schemas.reflection import Reflection
+from src.schemas.transcript import Transcript, TranscriptMetadata
+from src.services.embeddings import cosine_similarity, generate_embedding
+from src.services.reflection import reflect_transcript
 
 
 class NotePipelineState(TypedDict, total=False):

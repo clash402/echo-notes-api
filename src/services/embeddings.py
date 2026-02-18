@@ -4,9 +4,9 @@ import re
 from dataclasses import dataclass
 from typing import Protocol
 
-from backend.src.core.request_context import add_warning
-from backend.src.core.settings import get_settings
-from backend.src.core.llm.tracker import track_llm_call
+from src.core.request_context import add_warning
+from src.core.settings import get_settings
+from src.core.llm.tracker import track_llm_call
 
 
 @dataclass

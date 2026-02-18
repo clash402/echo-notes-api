@@ -6,9 +6,9 @@ from typing import Protocol
 
 from fastapi import UploadFile
 
-from backend.src.core.request_context import add_warning
-from backend.src.core.settings import get_settings
-from backend.src.schemas.transcript import Transcript, TranscriptMetadata
+from src.core.request_context import add_warning
+from src.core.settings import get_settings
+from src.schemas.transcript import Transcript, TranscriptMetadata
 
 
 class TranscriptionProvider(Protocol):
