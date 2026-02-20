@@ -5,6 +5,19 @@ from pathlib import Path
 from pydantic import BaseModel, Field
 
 
+def _parse_csv(value: str) -> list[str]:
+    origins: list[str] = []
+    for item in value.split(","):
+        origin = item.strip()
+        if not origin:
+            continue
+        # Browsers send Origin without a trailing slash; normalize env input to match.
+        if origin.startswith(("http://", "https://")):
+            origin = origin.rstrip("/")
+        origins.append(origin)
+    return origins
+
+
 class Settings(BaseModel):
     app_name: str = Field(
         default_factory=lambda: os.getenv("ECHO_NOTES_APP_NAME", "echo-notes-api")
@@ -45,6 +58,14 @@ class Settings(BaseModel):
     )
     whisper_openai_model: str = Field(
         default_factory=lambda: os.getenv("ECHO_NOTES_WHISPER_OPENAI_MODEL", "whisper-1")
+    )
+    cors_allow_origins: list[str] = Field(
+        default_factory=lambda: _parse_csv(
+            os.getenv(
+                "ECHO_NOTES_CORS_ALLOW_ORIGINS",
+                "http://localhost:3000,http://127.0.0.1:3000,https://echo-notes-web-eta.vercel.app",
+            )
+        )
     )
 
 
