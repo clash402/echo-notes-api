@@ -4,13 +4,17 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1
 
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 FROM base AS ci
 
 COPY . /app
 
-RUN python -m pip install --upgrade pip && \
+RUN python -m pip install --upgrade pip setuptools && \
     pip install -e ".[dev]"
 
 FROM base AS runtime
@@ -20,7 +24,7 @@ COPY main.py /app/main.py
 COPY src /app/src
 COPY data /app/data
 
-RUN python -m pip install --upgrade pip && \
+RUN python -m pip install --upgrade pip setuptools && \
     pip install .
 
 EXPOSE 8080
