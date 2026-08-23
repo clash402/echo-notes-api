@@ -27,6 +27,8 @@ Echo Notes is not currently a general knowledge assistant or production vector-s
 
 These are explicit current limits, not hidden guarantees. See [docs/architecture.md](docs/architecture.md) for the implemented pipeline and evolution triggers.
 
+The next product boundary is trustworthy recall: add correction and deletion before treating stored memory as durable, then evaluate semantic or hybrid retrieval against a keyword-search baseline. This keeps lifecycle governance and measurable retrieval quality ahead of secondary features such as automatic tagging.
+
 ## Note Pipeline
 
 ```text
