@@ -146,14 +146,12 @@ def _persist(state: NotePipelineState) -> NotePipelineState:
     connection = get_connection()
     now = datetime.now(tz=UTC).isoformat()
     try:
-        existing_rows = connection.execute(
-            """
+        existing_rows = connection.execute("""
             SELECT id, embedding_json
             FROM notes
             ORDER BY created_at DESC, id DESC
             LIMIT 50
-            """
-        ).fetchall()
+            """).fetchall()
 
         cursor = connection.execute(
             """
