@@ -1,243 +1,84 @@
 # Echo Notes
 
-**Personal Knowledge Memory & Infrastructure**
-A personal-scale knowledge infrastructure designed to capture, retrieve, and evolve human knowledge — built to grow into a team-wide memory system.
+Echo Notes is the knowledge and memory layer of Ghost Platform. The current API captures a transcript, reflects on it, creates an embedding, stores the result, and links the note to semantically similar recent notes.
 
----
+The product direction is durable decision recall: preserving why something was decided, not merely what was written. The current implementation establishes the ingestion and relationship foundation; it does not yet provide natural-language recall over the knowledge store.
 
-## 1. Elevator Pitch
+## Current Capabilities
 
-**Echo Notes** is a semantic memory system that enables natural-language recall over personal knowledge using embeddings and vector storage. It prioritizes relevance, transparency, and long-term knowledge quality over raw recall.
+- Accept text transcripts and uploaded audio
+- Transcribe with local Whisper or OpenAI, with explicit fallback metadata
+- Generate structured reflections with local deterministic logic or OpenAI
+- Generate local deterministic or OpenAI embeddings
+- Persist transcripts, provider metadata, reflections, embeddings, and cost records in SQLite
+- Link each new note to the three most similar notes among the latest 50
+- List notes and retrieve note details
+- Return a consistent `{ data, meta }` envelope with request ID, cost, and warnings
 
-Echo Notes is optimized for decision recall — recovering why something was decided, not just what was written.”
+## Boundaries
 
-👉 **Demo / Docs:** _Coming soon_
-👉 **Web repo:** <https://github.com/clash402/echo-notes-web>
+Echo Notes is not currently a general knowledge assistant or production vector-search service.
 
----
+- There is no semantic query or synthesized recall endpoint.
+- Embeddings are stored as JSON in SQLite and compared in process.
+- Recency weighting, decay, pruning, deletion, namespaces, access control, and retention policies are not implemented.
+- Audio may be transcribed, but the service does not manage durable audio-object storage.
+- Provider fallback favors local availability over strict production parity.
 
-## 2. What This Is
+These are explicit current limits, not hidden guarantees. See [docs/architecture.md](docs/architecture.md) for the implemented pipeline and evolution triggers.
 
-Echo Notes is **not a note-taking app**.
-
-It is a **knowledge infrastructure layer** that:
-
-- Ingests diverse content
-- Embeds meaning, not keywords
-- Retrieves contextually relevant information
-- Supports summarization and synthesis
-
-This system is designed to evolve beyond personal use. It prevents organizations from relearning the same lessons every 6–12 months.
-
----
-
-## 3. Why This Exists (Impact & Use Cases)
-
-Knowledge systems often fail because they:
-
-- Accumulate noise
-- Never forget
-- Optimize for capture, not retrieval
-
-Echo Notes focuses on:
-
-- Long-term signal quality
-- Context-aware recall
-- Designing for forgetting
-
-### Example Use Cases
-
-- Personal research memory
-- Project knowledge bases
-- Team documentation recall
-- Long-lived institutional memory
-
----
-
-## 4. What This Is _Not_ (Non-Goals)
-
-Echo Notes does **not**:
-
-- Replace human understanding
-- Guarantee perfect recall
-- Optimize for short-lived notes
-- Act as a general-purpose chatbot
-
-It optimizes for **durable knowledge**.
-
----
-
-## 5. System Overview
+## Note Pipeline
 
 ```text
-Content Ingestion
-     ↓
-Chunking & Metadata
-     ↓
-Embedding & Storage
-     ↓
-Semantic Retrieval
-     ↓
-Synthesis / Summary
+Transcript
+  -> validation
+  -> structured reflection
+  -> embedding
+  -> SQLite persistence
+  -> similarity links
 ```
 
-Each stage is configurable and observable.
+Provider-backed steps are probabilistic. Validation, envelope construction, persistence, link selection, and API contracts remain deterministic.
 
-### Multi-Modal Ingestion (Optional)
+## Quick Start
 
-Echo Notes supports multiple ingestion modalities, including:
+Requires Python 3.11 or later.
 
-- Text notes
-- Voice recordings (speech-to-text)
-- Structured documents
-
-Voice input is treated as an **ingestion optimization**, not a core dependency.
-All content ultimately flows through the same normalization, embedding, and retrieval pipeline.
-
----
-
-## 6. Example Execution Trace
-
-**Query:** "What decisions did we make about analytics architecture?"
-
-1. Retrieve semantically related notes
-2. Rank by relevance and recency
-3. Filter outdated or low-confidence content
-4. Synthesize summary
-5. Present sources transparently
-
-### A Concrete Example
-
-A representative Echo Notes interaction looks like this:
-
-1. A user captures an idea (voice or text) during a meeting or brainstorming session.
-2. The content is transcribed (if needed), chunked, and embedded with metadata.
-3. Weeks later, the user asks:  
-   _“What architectural decisions did we make around analytics?”_
-4. Echo Notes:
-   - Retrieves semantically related notes
-   - Weighs relevance, recency, and confidence
-   - Filters outdated or low-signal content
-5. The system returns:
-   - A synthesized summary
-   - Direct links to original source notes
-
-The system prioritizes **recovering meaning over reproducing text**.
-
----
-
-## 7. Safety, Guardrails & Failure Modes
-
-### Guardrails
-
-- Source attribution
-- Recency weighting
-- Privacy boundaries
-
-### Known Failure Modes
-
-- Embedding drift over time
-- Over-chunking reduces coherence
-- Stale knowledge without pruning
-
----
-
-## 8. Tradeoffs & Design Decisions
-
-### Key Tradeoffs
-
-- **Recall vs precision**
-- **Persistence vs decay**
-- **Automation vs curation**
-
-Echo Notes intentionally supports _forgetting_.
-
----
-
-## 9. Cost & Resource Controls
-
-- Controlled embedding generation
-- Storage limits
-- Query-time cost awareness
-
-### Example Cost Trace
-
-Each ingestion and retrieval operation is cost-instrumented:
-
-```text
-[INFO] Ingestion: voice_note_2024_10_03
-[INFO] Transcription tokens: 468
-[INFO] Embedding tokens: 312
-[INFO] Estimated cost: $0.0124
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -e ".[dev]"
+cp .env.local.example .env.local
+./start.sh
 ```
 
-Costs are tracked separately for ingestion and retrieval to support
-long-term operation at scale.
+The API runs at `http://localhost:8000`, with interactive OpenAPI documentation at `/docs`. Local providers allow the core flow to run without external credentials.
 
----
+Provider selection and optional Whisper setup are documented in [docs/provider-setup.md](docs/provider-setup.md).
 
-## 10. Reusability & Extension Points
+## API Surface
 
-- Pluggable embedding models
-- Custom chunking strategies
-- Team-level namespaces
-- Policy-driven retention
+| Endpoint | Purpose |
+| --- | --- |
+| `GET /health` | Service health |
+| `POST /audio/transcribe` | Transcribe an uploaded file or return explicit fallback metadata |
+| `POST /echo` | Generate a structured reflection for a transcript |
+| `POST /notes` | Run the note pipeline and persist the result |
+| `GET /notes` | List recent notes |
+| `GET /notes/{note_id}` | Retrieve a note and its related-note links |
 
----
+## Quality Checks
 
-## 11. Evolution Path
+```bash
+black --check .
+ruff check .
+pytest
+```
 
-### Short-Term
+Tests cover health, provider fallback, deterministic embeddings and reflection, and the note persistence flow.
 
-- Improved synthesis quality
-- Better metadata strategies
+## Deployment
 
-### Mid-Term
+The API is containerized and configured for Fly.io. The current Fly configuration does not mount persistent storage, so the deployed SQLite database is ephemeral across machine replacement. The current `main` branch also does not configure cross-origin browser access; a separately hosted web client requires a same-origin proxy or the pending CORS integration.
 
-- Team-shared memory
-- Access control layers
-
-### Long-Term
-
-- Organizational knowledge graphs
-- AI-assisted knowledge curation
-
----
-
-## 12. Requirements & Building Blocks
-
-- Python 3.10+
-- Vector database
-- Embedding model provider
-- FastAPI (optional interface)
-
----
-
-## 13. Developer Guide
-
-See `/docs` for:
-
-- Setup
-- Environment variables
-- Ingestion pipelines
-- Retrieval APIs
-
----
-
-## 14. Principal-Level Case Study (Cross-Project)
-
-Echo Notes provides the **memory substrate** in a broader intelligent systems platform:
-
-- Taskflow → control
-- Data Ghost → reasoning
-- Echo Notes → memory
-
----
-
-## 15. Author & Intent
-
-Built by **Josh Courtney** to explore:
-
-- Knowledge infrastructure design
-- Memory decay and relevance
-- Long-horizon information systems
+The web client lives in [echo-notes-web](https://github.com/clash402/echo-notes-web).
