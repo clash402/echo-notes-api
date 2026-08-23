@@ -25,7 +25,8 @@ COPY src /app/src
 COPY data /app/data
 
 RUN python -m pip install --upgrade pip setuptools && \
-    pip install .
+    pip install . && \
+    python -m pip uninstall -y pip
 
 EXPOSE 8080
 
